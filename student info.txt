@@ -1,0 +1,63 @@
+import React, { useState, useEffect } from "react";
+
+const StudentInfo = ({ student }) => {
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth > 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: isDesktop ? "row" : "column",
+        gap: "1rem",
+        padding: "1rem",
+        border: "1px solid #ccc",
+        borderRadius: "8px",
+        maxWidth: "600px",
+        margin: "auto",
+        fontFamily: "Arial, sans-serif",
+        backgroundColor: "#f9f9f9",
+      }}
+    >
+      <div style={{ flex: 1 }}>
+        <strong>Name:</strong> {student.name}
+      </div>
+      <div style={{ flex: 1 }}>
+        <strong>Age:</strong> {student.age}
+      </div>
+      <div style={{ flex: 1 }}>
+        <strong>Course:</strong> {student.course}
+      </div>
+      <div style={{ flex: 1 }}>
+        <strong>Email:</strong> {student.email}
+      </div>
+    </div>
+  );
+};
+
+function App() {
+  const student = {
+    name: "John Doe",
+    age: 22,
+    course: "Computer Science",
+    email: "john@example.com",
+  };
+
+  return (
+    <div style={{ padding: "2rem" }}>
+      <h1>Student Info</h1>
+      <StudentInfo student={student} />
+    </div>
+  );
+}
+
+export default App;
